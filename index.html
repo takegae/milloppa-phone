@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#111318">
+<title>iPhone</title>
+<style>
+:root{--bg:#111318;--panel:#202127;--muted:#8e8e93;--line:rgba(255,255,255,.12);--blue:#0a84ff;--text:#f5f5f7}
+*{box-sizing:border-box}body{margin:0;background:#090a0d;color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Arial,sans-serif;display:flex;justify-content:center;min-height:100dvh;align-items:center;padding:18px}
+button,input,textarea{font:inherit}button{cursor:pointer;color:inherit;border:0}
+.phone{position:relative;width:min(390px,100%);height:min(844px,calc(100dvh - 36px));min-height:620px;border:8px solid #27282d;border-radius:48px;overflow:hidden;background:#101116;box-shadow:0 28px 90px #000b,inset 0 0 0 1px #555;isolation:isolate}
+.wallpaper{position:absolute;inset:0;background:radial-gradient(ellipse at 72% 25%,#47536a 0%,transparent 32%),radial-gradient(ellipse at 25% 75%,#313b4d 0%,transparent 36%),linear-gradient(145deg,#11141b,#202733 48%,#08090d);z-index:-2}
+.wallpaper:before{content:"";position:absolute;width:280px;height:520px;left:70px;top:100px;border-radius:50%;background:linear-gradient(140deg,#a9b5c9aa,#59677d44 45%,#13192300);filter:blur(28px);transform:rotate(32deg)}
+.status{height:48px;position:absolute;top:0;left:0;right:0;padding:14px 25px 0;display:flex;align-items:flex-start;justify-content:space-between;font-size:14px;font-weight:650;z-index:20;pointer-events:none}
+.status-right{display:flex;gap:6px;align-items:center}.signal{font-size:12px;letter-spacing:-2px}.battery{width:22px;height:11px;border:1.4px solid white;border-radius:3px;position:relative;margin-left:1px}.battery:before{content:"";position:absolute;inset:2px 3px 2px 2px;background:white;border-radius:1px}.battery:after{content:"";position:absolute;right:-3.5px;top:3px;width:2px;height:4px;background:white;border-radius:0 2px 2px 0}
+.dynamic-island{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:112px;height:30px;border-radius:20px;background:#000;z-index:21}
+.screen{position:absolute;inset:0;display:none;overflow:hidden}.screen.active{display:block}.lock-screen{z-index:10;text-align:center;padding-top:112px;background:linear-gradient(180deg,#10131a1a,#10131a35)}
+.lock-date{font-size:18px;font-weight:500;color:#f3f4f7}.lock-time{font-size:84px;line-height:1.1;letter-spacing:-4px;font-weight:250;margin-top:5px;text-shadow:0 2px 20px #0002}.lock-bottom{position:absolute;left:0;right:0;bottom:28px;padding:0 32px}.lock-notice{font-size:13px;color:#ffffffb8;margin-bottom:22px}.unlock-hint{font-size:12px;color:#ffffffb8;margin-bottom:12px}.home-indicator{position:absolute;bottom:7px;left:50%;transform:translateX(-50%);height:5px;width:135px;border-radius:5px;background:white;z-index:30}
+.lock-actions{display:flex;justify-content:space-between;margin-bottom:24px}.round-action{width:48px;height:48px;border-radius:50%;background:#282a31a8;backdrop-filter:blur(12px);display:grid;place-items:center;font-size:21px}
+.home-screen{padding:70px 19px 94px}.widget{height:122px;border:1px solid #ffffff18;background:#171a20a8;backdrop-filter:blur(18px);border-radius:23px;padding:15px 17px;margin-bottom:22px}.widget-top{display:flex;justify-content:space-between;color:#c4c7ce;font-size:12px}.widget-time{font-size:32px;font-weight:300;margin-top:10px;letter-spacing:-1px}.widget-sub{font-size:12px;color:#a9adb6;margin-top:2px}.app-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:21px 9px}.app{display:flex;flex-direction:column;align-items:center;gap:6px;background:transparent;padding:0;min-width:0}.app-icon{width:57px;height:57px;border-radius:14px;display:grid;place-items:center;font-size:28px;box-shadow:0 2px 7px #0002;position:relative;overflow:hidden}.app-name{font-size:11px;text-shadow:0 1px 4px #000a;white-space:nowrap}.icon-phone{background:linear-gradient(145deg,#6be18c,#27b957)}.icon-messages{background:linear-gradient(145deg,#76ee79,#1dbb4d)}.icon-photos{background:#f6f6f7}.icon-camera{background:linear-gradient(145deg,#555,#111)}.icon-notes{background:linear-gradient(#fff 0 23%,#f6d95b 23%)}.icon-settings{background:linear-gradient(145deg,#cdd0d6,#6e737d)}.icon-instagram{background:radial-gradient(circle at 30% 105%,#ffdd55 0%,#ff543e 35%,#c837ab 65%,#515bd4 100%)}.icon-safari{background:linear-gradient(145deg,#b4e6ff,#087bdb)}.icon-clock{background:#f7f7f7;color:#222}.icon-mail{background:linear-gradient(145deg,#70c5ff,#1673dd)}.icon-music{background:linear-gradient(145deg,#ff5b85,#c80b47)}.icon-calendar{background:#f7f7f7;color:#202127}.icon-calendar .cal{font-size:9px;color:#f44;font-weight:700;display:block}.icon-calendar b{font-size:25px;font-weight:400}.icon-folder{background:linear-gradient(145deg,#74c7ff,#2181e8)}
+.dock{position:absolute;bottom:24px;left:12px;right:12px;height:83px;border-radius:27px;background:#ffffff24;border:1px solid #ffffff1c;backdrop-filter:blur(25px);display:flex;justify-content:space-evenly;align-items:center;padding:8px}.dock .app-icon{width:55px;height:55px}.dock .app-name{display:none}
+.app-screen{background:#f2f2f7;color:#111;z-index:5}.app-header{position:absolute;top:48px;left:0;right:0;padding:14px 20px 12px;display:flex;align-items:center;justify-content:space-between;z-index:3;background:#f2f2f7ee;backdrop-filter:blur(18px);border-bottom:1px solid #0000000b}.app-header h2{font-size:23px;margin:0;font-weight:700;letter-spacing:-.5px}.app-header button{background:transparent;color:var(--blue);font-size:16px;padding:3px}.app-content{position:absolute;top:108px;bottom:35px;left:0;right:0;overflow:auto;padding:16px 16px 24px}.back{font-size:16px!important}.section-label{font-size:13px;color:#73737b;margin:18px 5px 8px}.list-card{background:white;border-radius:14px;overflow:hidden}.list-row{padding:13px 14px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #ededf0;min-height:52px}.list-row:last-child{border-bottom:0}.avatar{width:42px;height:42px;border-radius:50%;background:#d5d7dc;color:#3a3b40;display:grid;place-items:center;font-size:17px;font-weight:600;flex-shrink:0}.row-main{flex:1;min-width:0}.row-title{font-size:16px;font-weight:550}.row-sub{font-size:13px;color:#888;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.row-time{font-size:12px;color:#8e8e93;align-self:flex-start;margin-top:3px}.muted{color:#8e8e93}.pill{border-radius:12px;background:#e6e6eb;padding:10px 12px;font-size:14px}.primary{background:var(--blue);color:white;border-radius:12px;padding:11px 15px}.text-input,.text-area{border:0;outline:0;background:white;color:#17171a;width:100%;padding:13px;border-radius:12px;font-size:16px}.text-area{min-height:180px;resize:vertical;line-height:1.5}.message-list{display:flex;flex-direction:column;gap:10px;padding:10px 0}.bubble{max-width:82%;padding:10px 13px;border-radius:19px;font-size:15px;line-height:1.35;white-space:pre-wrap;overflow-wrap:anywhere}.bubble.in{align-self:flex-start;background:#e5e5ea;border-bottom-left-radius:6px}.bubble.out{align-self:flex-end;background:#35c759;color:white;border-bottom-right-radius:6px}.compose{position:sticky;bottom:-24px;background:#f2f2f7;padding:10px 0;display:flex;gap:8px}.compose input{border:1px solid #d3d3d8;border-radius:20px;padding:10px 14px;flex:1;min-width:0;background:white}.compose button{width:39px;height:39px;border-radius:50%;background:var(--blue);color:white;font-size:20px}
+.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px}.photo-tile{aspect-ratio:1;background:linear-gradient(145deg,#9fa9b9,#2c3545);display:grid;place-items:center;color:#ffffffcc;font-size:28px;cursor:pointer}.photo-tile:nth-child(3n+2){background:linear-gradient(145deg,#b8b9bb,#555b66)}.photo-tile:nth-child(3n){background:linear-gradient(145deg,#5e7187,#192330)}.photo-tile span{font-size:10px;align-self:end;margin-bottom:8px}
+.note-item{background:#fff;border-radius:12px;padding:14px;margin-bottom:9px}.note-item b{display:block;font-size:16px;margin-bottom:5px}.note-item p{color:#777;margin:0;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dial-display{height:85px;display:flex;align-items:center;justify-content:center;font-size:31px;letter-spacing:1px}.dial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:270px;margin:0 auto}.dial-key{height:61px;width:61px;border-radius:50%;background:#dedee3;color:#151515;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:24px;margin:auto}.dial-key small{font-size:8px;letter-spacing:1px}.call-btn{display:block;margin:19px auto;background:#35c759;width:62px;height:62px;border-radius:50%;font-size:26px}
+.settings-row{display:flex;align-items:center;gap:12px;padding:12px 14px;background:white;border-bottom:1px solid #ededf0;font-size:15px}.settings-row:first-child{border-radius:14px 14px 0 0}.settings-row:last-child{border-radius:0 0 14px 14px;border-bottom:0}.settings-icon{width:29px;height:29px;border-radius:7px;display:grid;place-items:center;color:white;font-size:16px}
+.insta-header{font-family:Georgia,serif;font-size:24px;font-weight:bold}.insta-post{background:white;border-radius:13px;overflow:hidden;margin-bottom:16px}.insta-post-head{display:flex;align-items:center;gap:9px;padding:11px}.insta-pic{height:290px;background:linear-gradient(145deg,#a3a9b0,#3e4855 55%,#131820);display:grid;place-items:center;font-size:52px}.insta-actions{padding:11px 12px}.insta-actions button{background:transparent;color:#171717;font-size:22px;padding:0 7px 0 0}.insta-caption{font-size:13px;padding-top:7px}.insta-caption b{margin-right:5px}
+.toast{position:absolute;z-index:40;top:56px;left:22px;right:22px;padding:14px;border-radius:16px;background:#f8f8f8;color:#171717;box-shadow:0 8px 30px #0003;display:none}.toast.show{display:block;animation:pop .25s ease}@keyframes pop{from{transform:translateY(-10px);opacity:0}to{transform:translateY(0);opacity:1}}
+.call-overlay{position:absolute;inset:0;background:linear-gradient(160deg,#3b4656,#0c0e13 70%);z-index:25;display:none;text-align:center;padding:125px 24px 40px}.call-overlay.show{display:block}.call-name{font-size:31px;margin:18px 0 7px}.call-sub{color:#b9bdc5;font-size:14px}.call-controls{position:absolute;bottom:75px;left:0;right:0;display:flex;justify-content:space-evenly}.call-controls button{width:62px;height:62px;border-radius:50%;font-size:24px;background:#ffffff26}.call-controls .end{background:#ff453a}
+@media(max-height:700px){.phone{height:calc(100dvh - 16px);min-height:0}.home-screen{padding-top:62px}.widget{height:100px;margin-bottom:14px}.app-grid{gap:13px 7px}.app-icon{width:51px;height:51px}.dock{height:73px;bottom:18px}}
+</style>
+</head>
+<body>
+<div class="phone" id="phone">
+  <div class="wallpaper"></div>
+  <div class="status"><span id="statusTime">9:41</span><div class="status-right"><span class="signal">▮▮▮</span><span>⌁</span><span class="battery"></span></div></div>
+  <div class="dynamic-island"></div>
+  <div class="toast" id="toast"></div>
+  <section class="screen lock-screen active" id="lock">
+    <div class="lock-date" id="lockDate">10월 27일 화요일</div><div class="lock-time" id="lockTime">9:41</div>
+    <div class="lock-bottom"><div class="lock-notice" id="lockNotice">알림 없음</div><div class="lock-actions"><button class="round-action" onclick="toast('손전등')">⌁</button><button class="round-action" onclick="toast('카메라를 열었어')">◎</button></div><div class="unlock-hint">위로 쓸어올려 열기</div></div>
+  </section>
+  <section class="screen home-screen" id="home">
+    <div class="widget"><div class="widget-top"><span id="widgetDate">화요일, 10월 27일</span><span>☁︎</span></div><div class="widget-time" id="widgetTime">9:41</div><div class="widget-sub">좋은 하루 보내세요</div></div>
+    <div class="app-grid">
+      <button class="app" onclick="openApp('phoneApp')"><span class="app-icon icon-phone">☎</span><span class="app-name">전화</span></button>
+      <button class="app" onclick="openApp('messagesApp')"><span class="app-icon icon-messages">●</span><span class="app-name">메시지</span></button>
+      <button class="app" onclick="openApp('photosApp')"><span class="app-icon icon-photos">🌈</span><span class="app-name">사진</span></button>
+      <button class="app" onclick="openApp('cameraApp')"><span class="app-icon icon-camera">◉</span><span class="app-name">카메라</span></button>
+      <button class="app" onclick="openApp('notesApp')"><span class="app-icon icon-notes">≡</span><span class="app-name">메모</span></button>
+      <button class="app" onclick="openApp('settingsApp')"><span class="app-icon icon-settings">⚙</span><span class="app-name">설정</span></button>
+      <button class="app" onclick="openApp('instagramApp')"><span class="app-icon icon-instagram">◎</span><span class="app-name">Instagram</span></button>
+      <button class="app" onclick="openApp('safariApp')"><span class="app-icon icon-safari">◉</span><span class="app-name">Safari</span></button>
+      <button class="app" onclick="openApp('clockApp')"><span class="app-icon icon-clock">◷</span><span class="app-name">시계</span></button>
+      <button class="app" onclick="openApp('mailApp')"><span class="app-icon icon-mail">✉</span><span class="app-name">Mail</span></button>
+      <button class="app" onclick="openApp('musicApp')"><span class="app-icon icon-music">♫</span><span class="app-name">음악</span></button>
+      <button class="app" onclick="openApp('calendarApp')"><span class="app-icon icon-calendar"><span><span class="cal">화요일</span><b>27</b></span></span><span class="app-name">캘린더</span></button>
+    </div>
+    <div class="dock">
+      <button class="app" onclick="openApp('phoneApp')"><span class="app-icon icon-phone">☎</span><span class="app-name">전화</span></button>
+      <button class="app" onclick="openApp('messagesApp')"><span class="app-icon icon-messages">●</span><span class="app-name">메시지</span></button>
+      <button class="app" onclick="openApp('safariApp')"><span class="app-icon icon-safari">◉</span><span class="app-name">Safari</span></button>
+      <button class="app" onclick="openApp('musicApp')"><span class="app-icon icon-music">♫</span><span class="app-name">음악</span></button>
+    </div>
+  </section>
+  <section class="screen app-screen" id="phoneApp">
+    <header class="app-header"><button onclick="goHome()" class="back">‹ 홈</button><h2>전화</h2><button onclick="showDial()">키패드</button></header>
+    <div class="app-content" id="phoneContent"><div class="section-label">최근 통화</div><div class="list-card" id="callList"></div><div style="text-align:center;margin-top:24px"><button class="primary" onclick="showDial()">키패드 열기</button></div></div>
+  </section>
+  <section class="screen app-screen" id="messagesApp">
+    <header class="app-header"><button onclick="goHome()" class="back">‹ 홈</button><h2 id="messagesTitle">메시지</h2><button onclick="newChat()">작성</button></header>
+    <div class="app-content" id="messagesContent"></div>
+  </section>
+  <section class="screen app-screen" id="photosApp">
+    <header class="app-header"><button onclick="goHome()" class="back">‹ 홈</button><h2>사진</h2><button onclick="toast('선택할 사진이 없어')">선택</button></header>
+    <div class="app-content"><div class="section-label">최근 항목</div><div class="photo-grid" id="photoGrid"></div><p class="muted" style="font-size:12px;margin:15px 4px">샘플 이미지 타일이야. 실제 사진을 넣고 싶으면 코드의 photos 배열을 수정하면 돼.</p></div>
+  </section>
+  <section class="screen app-screen" id="cameraApp">
+    <header class="app-header"><button onclick="goHome()" class="back">‹ 홈</button><h2>카메라</h2><button onclick="toast('사진 앱에 저장된 샘플 사진을 확인해 봐')">사진</button></header>
+    <div class="app-content" style="background:#111;color:white;top:48px;bottom:35px;display:flex;flex-direction:column;justify-content:space-between;text-align:center;padding:80px 0 20px"><div style="color:#aaa">PHOTO　 VIDEO　 PORTRAIT</div><div style="font-size:52px;color:#555">◉</div><button onclick="toast('웹사이트에서는 실제 카메라 촬영을 설정하지 않았어')" style="margin:auto;background:#f5f5f5;color:#111;border-radius:50%;width:72px;height:72px;font-size:26px">●</button></div>
+  </section>
+  <section class="screen app-screen" id="notesApp">
+    <header class="app-header"><button onclick="goHome()" class="back">‹ 홈</button><h2>메모</h2><button onclick="createNote()">새 메모</button></header>
+    <div class="app-content" id="notesContent"></div>
+  </section>
+  <section class="screen app-screen" id="settingsApp">
+    <header class="app-header"><button onclick="goHome()" class="back">‹ 홈</button><h2>설정</h2><span style="width:32px"></span></header>
+    <div class="app-content"><div style="display:flex;align-items:center;gap:12px;padding:14px;background:white;border-radius:14px;margin-bottom:20px"><div class="avatar" style="width:54px;height:54px;font-size:23px">M</div><div><b>사용자</b><div class="row-sub">Apple 계정, iCloud 등</div></div><span style="margin-left:auto;color:#999">›</span></div>
+    <div class="list-card"><div class="settings-row"><span class="settings-icon" style="background:#777">✈</span>에어플레인 모드 <span style="margin-left:auto;color:#999">끔</span></div><div class="settings-row"><span class="settings-icon" style="background:#1689f8">◉</span>Wi-Fi <span style="margin-left:auto;color:#999">연결됨</span></div><div class="settings-row"><span class="settings-icon" style="background:#1689f8">ᛒ</span>Bluetooth <span style="margin-left:auto;color:#999">켬</span></div></div>
+    <div class="section-label">디스플레이</div><div class="list-card"><div class="settings-row" onclick="toggleTheme()"><span class="settings-icon" style="background:#777">◐</span>다크 모드 <span id="themeStatus" style="margin-left:auto;color:#999">켬</span></div><div class="settings-row" onclick="toast('iOS 스타일 가상폰 데모')"><span class="settings-icon" style="background:#aaa">ⓘ</span>정보</div></div>
+    <div class="section-label">이 웹사이트는 실제 iPhone이 아닌 인터랙티브 데모야.</div></div>
+  </section>
+  <section class="screen app-screen" id="instagramApp">
+    <header class="app-header"><button onclick="goHome()" class="back">‹ 홈</button><h2 class="insta-header">Instagram</h2><button onclick="toast('새 게시물 작성')">＋</button></header>
+    <div class="app-content" id="instaContent"></div>
+  </section>
+  <section class="screen app-screen" id="safariApp">
+    <header class="app-header"><button onclick="goHome()" class="back">‹ 홈</button><h2>Safari</h2><button onclick="toast('새 탭')">＋</button></header>
+    <div class="app-content"><div style="display:flex;gap:7px;margin-bottom:18px"><input class="text-input" id="searchBox" placeholder="검색 또는 웹사이트 이름 입력"><button class="primary" onclick="doSearch()">이동</button></div><div style="text-align:center;padding-top:55px"><div style="font-size:52px;color:#1688ee">◉</div><h2 style="font-weight:500">즐겨찾기</h2><div style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:25px"><button class="pill" onclick="document.getElementById('searchBox').value='instagram.com'">Instagram</button><button class="pill" onclick="document.getElementById('searchBox').value='youtube.com'">YouTube</button><button class="pill" onclick="document.getElementById('searchBox').value='google.com'">Google</button></div></div></div>
+  </section>
+  <section class="screen app-screen" id="clockApp">
+    <header class="app-header"><button onclick="goHome()" class="back">‹ 홈</button><h2>시계</h2><button onclick="toast('알람 추가')">＋</button></header>
+    <div class="app-content"><div class="section-label">세계 시계</div><div class="list-card"><div class="list-row"><div class="row-main"><div class="row-title">서울</div><div class="row-sub">대한민국</div></div><div style="font-size:28px;font-weight:300" id="worldTime">09:41</div></div></div><div class="section-label">알람</div><div class="list-card"><div class="list-row"><div class="row-main"><div class="row-title">07:00</div><div class="row-sub">매일 · 알람</div></div><span style="color:#34c759">●</span></div></div><div class="section-label">타이머</div><div class="list-card"><div class="list-row" onclick="toast('타이머 기능은 데모 버전이야')">타이머 <span style="margin-left:auto;color:#888">›</span></div></div></div>
+  </section>
+  <section class="screen app-screen" id="mailApp">
+    <header class="app-header"><button onclick="goHome()" class="back">‹ 홈</button><h2>Mail</h2><button onclick="toast('새 메일 작성')">작성</button></header>
+    <div class="app-content"><div class="section-label">받은 편지함</div><div class="list-card"><div class="list-row"><div class="avatar" style="background:#1688ef;color:white">A</div><div class="row-main"><div class="row-title">Apple</div><div class="row-sub">새로운 기기에서 로그인했습니다.</div></div><div class="row-time">어제</div></div><div class="list-row"><div class="avatar">M</div><div class="row-main"><div class="row-title">메일 시작하기</div><div class="row-sub">Mail 앱을 사용해 보세요.</div></div><div class="row-time">월</div></div></div></div>
+  </section>
+  <section class="screen app-screen" id="musicApp">
+    <header class="app-header"><button onclick="goHome()" class="back">‹ 홈</button><h2>음악</h2><button onclick="toast('보관함')">보관함</button></header>
+    <div class="app-content" style="text-align:center;padding-top:45px"><div style="width:210px;height:210px;margin:0 auto 24px;border-radius:12px;background:linear-gradient(145deg,#ff8da8,#7b1438);display:grid;place-items:center;font-size:70px;box-shadow:0 10px 25px #0002">♫</div><h2 style="margin-bottom:5px">Now Playing</h2><div class="muted">선택된 노래 없음</div><div style="display:flex;justify-content:center;gap:40px;font-size:25px;margin-top:35px"><button onclick="toast('이전 곡')">◀</button><button onclick="toast('재생할 노래가 없어')" style="font-size:35px">▶</button><button onclick="toast('다음 곡')">▶|</button></div></div>
+  </section>
+  <section class="screen app-screen" id="calendarApp">
+    <header class="app-header"><button onclick="goHome()" class="back">‹ 홈</button><h2>캘린더</h2><button onclick="toast('새로운 일정')">＋</button></header>
+    <div class="app-content"><div class="section-label">2026년 10월</div><div class="list-card" style="padding:16px"><div style="display:grid;grid-template-columns:repeat(7,1fr);text-align:center;gap:12px;font-size:13px;color:#888;margin-bottom:14px"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div><div id="calendarGrid" style="display:grid;grid-template-columns:repeat(7,1fr);text-align:center;gap:9px;font-size:14px"></div></div><div class="section-label">예정된 일정</div><div class="list-card"><div class="list-row">예정된 일정이 없어</div></div></div>
+  </section>
+  <section class="screen app-screen" id="dialApp">
+    <header class="app-header"><button onclick="openApp('phoneApp')" class="back">‹ 최근 통화</button><h2>키패드</h2><span style="width:32px"></span></header>
+    <div class="app-content" style="padding-top:20px"><div class="dial-display" id="dialNumber"></div><div class="dial-grid" id="dialGrid"></div><button class="call-btn" onclick="startCall()">☎</button></div>
+  </section>
+  <section class="screen app-screen" id="chatApp">
+    <header class="app-header"><button onclick="openApp('messagesApp')" class="back">‹ 메시지</button><h2 id="chatName">대화</h2><button onclick="toast('연락처 정보')">정보</button></header>
+    <div class="app-content" id="chatContent" style="display:flex;flex-direction:column"></div>
+  </section>
+  <section class="screen app-screen" id="noteEditApp">
+    <header class="app-header"><button onclick="openApp('notesApp')" class="back">취소</button><h2>메모 편집</h2><button onclick="saveNote()">완료</button></header>
+    <div class="app-content"><input class="text-input" id="noteTitle" placeholder="제목" style="font-weight:700;margin-bottom:10px"><textarea class="text-area" id="noteBody" placeholder="메모를 입력하세요"></textarea></div>
+  </section>
+  <div class="call-overlay" id="callOverlay"><div style="color:#c8ccd4">휴대전화</div><div class="avatar" style="width:95px;height:95px;font-size:34px;margin:30px auto 0;background:#5b6471;color:white" id="callAvatar">?</div><div class="call-name" id="callName">알 수 없음</div><div class="call-sub" id="callSub">통화 연결 중…</div><div class="call-controls"><button onclick="toast('음소거')">⌁</button><button onclick="toast('스피커')">◖</button><button class="end" onclick="endCall()">☎</button></div></div>
+  <div class="home-indicator" id="homeIndicator"></div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const contacts=[
+ {name:"민준",initial:"민",preview:"ㅇㅇ 이따 연락할게",time:"오후 8:42",msgs:[["in","뭐해"],["out","집 가는 중"],["in","ㅇㅇ 이따 연락할게"]]},
+ {name:"지훈",initial:"지",preview:"ㅋㅋㅋㅋㅋㅋ",time:"오후 6:18",msgs:[["in","야 너 어제 어디 갔었음?"],["out","친구 만났어 ㅋㅋ"],["in","ㅋㅋㅋㅋㅋㅋ"]]},
+ {name:"엄마",initial:"엄",preview:"집에 오면 연락해",time:"오후 4:03",msgs:[["in","집에 오면 연락해"],["out","웅 알겠어"]]},
+ {name:"현우",initial:"현",preview:"사진",time:"어제",msgs:[["out","이거 봐봐"],["in","ㅋㅋㅋㅋㅋㅋ 뭐야"]]}
+];
+let currentChat=0, notes=[{title:"할 일",body:"• 과제 하기\n• 충전기 챙기기\n• 친구한테 연락하기"},{title:"메모",body:"나중에 확인할 것들"}],editingNote=-1,dialValue="",callSource="";
+const calls=[{name:"민준",sub:"발신",time:"오후 8:42",icon:"↗"},{name:"엄마",sub:"수신",time:"오후 4:03",icon:"↙"},{name:"지훈",sub:"부재중 전화",time:"오전 11:20",icon:"↙",missed:true},{name:"현우",sub:"발신",time:"어제",icon:"↗"}];
+const photos=["🌁","🌃","🌊","🚘","🌆","🌉","☕","🌙","🏙","🌫","🌄","🖤"];
+function clock(){const d=new Date();const time=d.toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit',hour12:false});$('statusTime').textContent=time;$('widgetTime').textContent=time;$('lockTime').textContent=time;$('worldTime').textContent=time;$('lockDate').textContent=d.toLocaleDateString('ko-KR',{month:'long',day:'numeric',weekday:'long'});$('widgetDate').textContent=d.toLocaleDateString('ko-KR',{weekday:'long',month:'long',day:'numeric'});}
+clock();setInterval(clock,15000);
+function toast(msg){$('toast').textContent=msg;$('toast').classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>$('toast').classList.remove('show'),2200)}
+function hideScreens(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'))}
+function openApp(id){hideScreens();$(id).classList.add('active');$('homeIndicator').style.background=id==='cameraApp'?'white':'#777';if(id==='phoneApp')renderCalls();if(id==='messagesApp')renderMessages();if(id==='photosApp')renderPhotos();if(id==='notesApp')renderNotes();if(id==='instagramApp')renderInstagram();if(id==='dialApp')renderDial();if(id==='calendarApp')renderCalendar();if(id==='chatApp')renderChat()}
+function goHome(){hideScreens();$('home').classList.add('active');$('homeIndicator').style.background='white'}
+function unlock(){if($('lock').classList.contains('active'))goHome()}
+$('lock').addEventListener('click',unlock);
+let touchStart=0;
+$('phone').addEventListener('touchstart',e=>{touchStart=e.changedTouches[0].screenY},{passive:true});
+$('phone').addEventListener('touchend',e=>{const end=e.changedTouches[0].screenY;if($('lock').classList.contains('active')&&touchStart-end>35)unlock();else if(end-touchStart>90&&document.querySelector('.screen.active')?.id==='home'){$('lock').classList.add('active');hideScreens();$('lock').classList.add('active')}},{passive:true});
+$('homeIndicator').addEventListener('click',()=>{if($('lock').classList.contains('active'))unlock();else goHome()});
+function renderCalls(){$('callList').innerHTML=calls.map(c=>`<div class="list-row" onclick="callContact('${c.name}')"><div class="avatar" style="background:#dfe1e6">${c.initial||c.name[0]}</div><div class="row-main"><div class="row-title" style="color:${c.missed?'#ff453a':'#111'}">${c.name}</div><div class="row-sub">${c.icon} ${c.sub}</div></div><div class="row-time">${c.time}</div><span style="color:#999;font-size:22px">ⓘ</span></div>`).join('')}
+function showDial(){openApp('dialApp')}
+function renderDial(){const keys=[['1',''],['2','ABC'],['3','DEF'],['4','GHI'],['5','JKL'],['6','MNO'],['7','PQRS'],['8','TUV'],['9','WXYZ'],['*',''],['0','+'],['#','']];$('dialNumber').textContent=dialValue;$('dialGrid').innerHTML=keys.map(([n,l])=>`<button class="dial-key" onclick="dialPress('${n}')">${n}<small>${l}</small></button>`).join('')}
+function dialPress(n){dialValue+=n;renderDial()}
+function callContact(name){$('callName').textContent=name;$('callAvatar').textContent=name[0];$('callSub').textContent='통화 연결 중…';$('callOverlay').classList.add('show');callSource=name}
+function startCall(){callContact(dialValue||'알 수 없음')}
+function endCall(){$('callOverlay').classList.remove('show');if(callSource){calls.unshift({name:callSource,sub:'발신',time:'방금',icon:'↗'});callSource='';renderCalls()}}
+function renderMessages(){$('messagesContent').innerHTML='<div class="section-label">고정된 대화</div><div class="list-card">'+contacts.map((c,i)=>`<div class="list-row" onclick="openChat(${i})"><div class="avatar">${c.initial}</div><div class="row-main"><div class="row-title">${c.name}</div><div class="row-sub">${c.preview}</div></div><div class="row-time">${c.time}　›</div></div>`).join('')+'</div><div class="section-label">메시지는 샘플 대화야</div>'}
+function openChat(i){currentChat=i;openApp('chatApp')}
+function renderChat(){const c=contacts[currentChat];$('chatName').textContent=c.name;$('chatContent').innerHTML='<div style="text-align:center;color:#888;font-size:12px;margin-bottom:14px">'+c.name+'와의 iMessage</div><div class="message-list" id="messageList">'+c.msgs.map(m=>`<div class="bubble ${m[0]}">${escapeHtml(m[1])}</div>`).join('')+'</div><div class="compose"><input id="messageInput" placeholder="iMessage" onkeydown="if(event.key==='Enter')sendMessage()"><button onclick="sendMessage()">↑</button></div>'}
+function sendMessage(){const input=$('messageInput');if(!input||!input.value.trim())return;const c=contacts[currentChat];c.msgs.push(['out',input.value.trim()]);c.preview=input.value.trim();input.value='';renderChat();const list=$('chatContent');list.scrollTop=list.scrollHeight}
+function newChat(){const name=prompt('대화할 사람 이름을 입력해 줘');if(!name)return;contacts.unshift({name,initial:name[0],preview:'새로운 대화',time:'지금',msgs:[]});openChat(0)}
+function renderPhotos(){$('photoGrid').innerHTML=photos.map((p,i)=>`<div class="photo-tile" onclick="openPhoto(${i})">${p}<span>${['어제','10월 24일','10월 22일'][i%3]}</span></div>`).join('')}
+function openPhoto(i){toast('사진 '+(i+1)+' · 샘플 사진')}
+function renderNotes(){$('notesContent').innerHTML='<div class="section-label">'+notes.length+'개의 메모</div>'+notes.map((n,i)=>`<div class="note-item" onclick="editNote(${i})"><b>${escapeHtml(n.title||'새로운 메모')}</b><p>${escapeHtml(n.body||'내용 없음')}</p></div>`).join('')}
+function createNote(){editingNote=-1;$('noteTitle').value='';$('noteBody').value='';openApp('noteEditApp')}
+function editNote(i){editingNote=i;$('noteTitle').value=notes[i].title;$('noteBody').value=notes[i].body;openApp('noteEditApp')}
+function saveNote(){const n={title:$('noteTitle').value.trim()||'새로운 메모',body:$('noteBody').value};if(editingNote<0)notes.unshift(n);else notes[editingNote]=n;openApp('notesApp')}
+function renderInstagram(){$('instaContent').innerHTML=`<div style="display:flex;gap:12px;overflow:auto;padding:4px 0 16px">${['내 스토리','민준','지훈','현우'].map((n,i)=>`<div style="text-align:center;min-width:58px"><div style="border:2px solid #d84b91;border-radius:50%;padding:3px;width:55px;height:55px;margin:auto"><div class="avatar" style="width:45px;height:45px">${['＋','민','지','현'][i]}</div></div><div style="font-size:11px;margin-top:5px">${n}</div></div>`).join('')}</div>`+[
+{user:'minjun_02',emoji:'🌃',caption:'오늘 밤 공기 좋다',likes:128},
+{user:'jh.archive',emoji:'🚘',caption:'drive.',likes:86},
+{user:'hyunwoo.jpg',emoji:'🌊',caption:'잠깐 바다',likes:204}
+].map((p,i)=>`<div class="insta-post"><div class="insta-post-head"><div class="avatar" style="width:34px;height:34px">${p.user[0].toUpperCase()}</div><b style="font-size:13px">${p.user}</b><span style="margin-left:auto">•••</span></div><div class="insta-pic" onclick="toast('게시물 열기')">${p.emoji}</div><div class="insta-actions"><button onclick="likePost(this)">♡</button><button onclick="toast('댓글 보기')">○</button><button onclick="toast('공유')">↗</button><div style="font-size:12px;margin-top:4px"><b>${p.likes} likes</b></div><div class="insta-caption"><b>${p.user}</b>${p.caption}</div><div style="color:#888;font-size:11px;margin-top:6px">댓글 보기</div></div></div>`).join('')+'<div style="font-size:12px;color:#888;text-align:center;padding:8px">샘플 게시물 · 실제 Instagram과 연결되지 않아</div>'}
+function likePost(btn){btn.textContent=btn.textContent==='♡'?'♥':'♡';btn.style.color=btn.textContent==='♥'?'#ff3040':'#171717';}
+function renderCalendar(){const d=new Date();const y=d.getFullYear(),m=d.getMonth();const first=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate();$('calendarGrid').innerHTML=Array(first).fill('<span></span>').join('')+Array.from({length:days},(_,i)=>`<span style="width:27px;height:27px;display:grid;place-items:center;margin:auto;border-radius:50%;${i+1===d.getDate()?'background:#ff453a;color:white;font-weight:700':''}">${i+1}</span>`).join('')}
+function toggleTheme(){const dark=$('themeStatus').textContent==='끔';$('themeStatus').textContent=dark?'켬':'끔';toast('이 데모의 배경 스타일은 고정되어 있어')}
+function doSearch(){const q=$('searchBox').value.trim();if(!q)return;const url=/^https?:\/\//i.test(q)?q:'https://'+q.replace(/\s+/g,'');window.open(url,'_blank','noopener')}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if($('callOverlay').classList.contains('show'))endCall();else goHome()}});
+renderCalls();renderMessages();renderPhotos();renderNotes();renderInstagram();renderCalendar();
+</script>
+</body>
+</html>
